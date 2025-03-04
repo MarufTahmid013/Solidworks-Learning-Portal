@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolidWorks Learning Portal</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.3s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode header, .dark-mode footer {
+            background-color: #1f1f1f;
+        }
+        .dark-mode section {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        .dark-mode .assignment {
+            background: #333;
+        }
+        .dark-mode .dropdown {
+            background: #444;
+        }
+
+        /* Floating Header */
+        header {
+            background: #35424a;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Adjust body padding to account for the fixed header */
+        body {
+            padding-top: 70px; /* Height of the header + some extra space */
+        }
+
+        /* Menu Icon */
+        .menu-icon {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001; /* Ensure it's above the header */
+            color: white;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #35424a;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 1002; /* Ensure it's above the header */
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #800000;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .sidebar .subsection {
+            padding-left: 20px;
+            font-size: 16px;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            background-color: #800000;
+            color: white;
+            padding: 10px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+
+        .assignment {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e4e4e4;
+            border-left: 5px solid #35424a;
+        }
+
+        .upload-section {
+            margin-top: 10px;
+        }
+
+        .dropdown {
+            margin-top: 10px;
+            cursor: pointer;
+            padding: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, display 0.3s ease;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            margin: 20px 0;
+            padding: 10px;
+            background: #e4e4e4;
+            border-radius: 5px;
+        }
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 10px;
+            background: #35424a;
+        }
+
+        /* Footer */
+        footer {
+            background: #35424a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            iframe {
+                height: 200px;
+            }
+            .assignment, .upload-section {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Icon -->
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+
+    <!-- Floating Header -->
+    <header>
+        <h1>SolidWorks Learning Portal</h1>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">×</a>
+        <a href="#beginner">SolidWorks for Beginners</a>
+        <div class="subsection">
+            <a href="#introduction">Introduction to SolidWorks</a>
+            <a href="#sketching">Basic Sketching</a>
+            <a href="#extrude">Extrude Boss & Cut</a>
+            <a href="#pattern">Pattern Feature</a>
+            <a href="#loft">Loft Boss & Cut</a>
+            <a href="#swept">Swept Boss & Cut</a>
+            <a href="#revolve">Revolve Boss & Cut</a>
+            <a href="#threading">Threading</a>
+        </div>
+        <a href="#advanced">Advanced SolidWorks</a>
+        <div class="subsection">
+            <a href="#planes">Creating Different Reference Planes</a>
+            <a href="#surface">Surface Modeling Basics</a>
+            <a href="#propeller">Propeller Design</a>
+            <a href="#airpod">Air Pod Design</a>
+        </div>
+        <a href="#professional">Professional SolidWorks Designs</a>
+        <div class="subsection">
+            <a href="#cylinder">Four-Stroke Cylinder</a>
+            <a href="#drone">Drone Design</a>
+            <a href="#robotic-arm">Robotic Arm</a>
+            <a href="#rover">Rover Design</a>
+        </div>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="progress-tracker">
+        <h3>Progress</h3>
+        <div class="progress-bar">
+            <div class="progress" style="width: 30%;"></div>
+        </div>
+        <p>30% Complete</p>
+    </div>
+
+    <!-- Beginner Section -->
+    <section id="beginner">
+        <h2>SolidWorks for Beginners</h2>
+        <h3 id="introduction">1. Introduction to SolidWorks</h3>
+        <iframe src="https://www.youtube.com/embed/UWB3985TKPA" allowfullscreen></iframe>
+
+        <h3 id="sketching">2. Basic Sketching</h3>
+        <iframe src="https://www.youtube.com/embed/hgleruRC7YM" allowfullscreen></iframe>
+
+        <div class="assignment">
+            <h3>Assignment</h3>
+            <iframe src="https://www.youtube.com/embed/9bH4UpLTq0s" allowfullscreen></iframe>
+            <div class="upload-section">
+                <input type="file">
+                <button>Upload</button>
+            </div>
+        </div>
+
+        <div class="dropdown" onclick="toggleDropdown('beginnerMore', this)" aria-expanded="false" aria-label="Toggle beginner section">Show more ▼</div>
+        <div id="beginnerMore" class="hidden">
+            <h3 id="extrude">3. Extrude Boss & Cut</h3>
+            <iframe src="https://www.youtube.com/embed/Pr59Oe-oE9g" allowfullscreen></iframe>
+
+            <div class="assignment">
+                <h3>Assignment</h3>
+                <iframe src="https://www.youtube.com/embed/KhL3lHNqqsM" allowfullscreen></iframe>
+                <div class="upload-section">
+                    <input type="file">
+                    <button>Upload</button>
+                </div>
+            </div>
+
+            <h3 id="pattern">4. Pattern Feature</h3>
+            <iframe src="https://www.youtube.com/embed/eGFC5hZg4w0" allowfullscreen></iframe>
+
+            <h3 id="loft">5. Loft Boss & Cut</h3>
+            <iframe src="https://www.youtube.com/embed/Lfkh1qpUkKw" allowfullscreen></iframe>
+
+            <div class="assignment">
+                <h3>Assignment</h3>
+                <iframe src="https://www.youtube.com/embed/W66aBLXJw6E" allowfullscreen></iframe>
+                <div class="upload-section">
+                    <input type="file">
+                    <button>Upload</button>
+                </div>
+            </div>
+
+            <h3 id="swept">6. Swept Boss & Cut</h3>
+            <iframe src="https://www.youtube.com/embed/h1PkHXt1YJ4" allowfullscreen></iframe>
+
+            <div class="assignment">
+                <h3>Assignment</h3>
+                <iframe src="https://www.youtube.com/embed/6dQogbD4FG4" allowfullscreen></iframe>
+                <div class="upload-section">
+                    <input type="file">
+                    <button>Upload</button>
+                </div>
+            </div>
+
+            <h3 id="revolve">7. Revolve Boss & Cut</h3>
+            <iframe src="https://www.youtube.com/embed/zoDILEL9zok" allowfullscreen></iframe>
+
+            <div class="assignment">
+                <h3>Assignment</h3>
+                <iframe src="https://www.youtube.com/embed/oIVsmjXm5Nc" allowfullscreen></iframe>
+                <div class="upload-section">
+                    <input type="file">
+                    <button>Upload</button>
+                </div>
+            </div>
+
+            <h3 id="threading">8. Threading</h3>
+            <iframe src="https://www.youtube.com/embed/7oKBdfOEAw0" allowfullscreen></iframe>
+
+            <div class="assignment">
+                <h3>Assignment</h3>
+                <iframe src="https://www.youtube.com/embed/mfqLQ1xtOvE" allowfullscreen></iframe>
+                <div class="upload-section">
+                    <input type="file">
+                    <button>Upload</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Section -->
+    <section id="advanced">
+        <h2>Advanced SolidWorks</h2>
+        <h3 id="planes">1. Creating Different Reference Planes</h3>
+        <iframe src="https://www.youtube.com/embed/ddxw85FmWGA" allowfullscreen></iframe>
+
+        <div class="assignment">
+            <h3>Assignment</h3>
+            <iframe src="https://www.youtube.com/embed/EyOD8CohvRs" allowfullscreen></iframe>
+        </div>
+
+        <h3 id="surface">2. Surface Modeling Basics</h3>
+        <iframe src="https://www.youtube.com/embed/mfqLQ1xtOvE" allowfullscreen></iframe>
+
+        <div class="dropdown" onclick="toggleDropdown('advancedMore', this)" aria-expanded="false" aria-label="Toggle advanced section">Show more ▼</div>
+        <div id="advancedMore" class="hidden">
+            <h3 id="propeller">3. Propeller Design</h3>
+            <iframe src="https://www.youtube.com/embed/kp4-dny08jc" allowfullscreen></iframe>
+
+            <h3 id="airpod">4. Air Pod Design</h3>
+            <iframe src="https://www.youtube.com/embed/dZURGVJd_Cw" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Professional Section -->
+    <section id="professional">
+        <h2>Professional SolidWorks Designs</h2>
+        <h3 id="cylinder">1. Four-Stroke Cylinder</h3>
+        <iframe src="https://www.youtube.com/embed/NZCMTK9VTSQ" allowfullscreen></iframe>
+
+        <h3 id="drone">2. Drone Design</h3>
+        <iframe src="https://www.youtube.com/embed/8BchvQPJsL0" allowfullscreen></iframe>
+
+        <div class="dropdown" onclick="toggleDropdown('professionalMore', this)" aria-expanded="false" aria-label="Toggle professional section">Show more ▼</div>
+        <div id="professionalMore" class="hidden">
+            <h3 id="robotic-arm">3. Robotic Arm</h3>
+            <iframe src="https://www.youtube.com/embed/WUIGY8ZHef8" allowfullscreen></iframe>
+
+            <h3 id="rover">4. Rover Design</h3>
+            <iframe src="https://www.youtube.com/embed/X_NhGME49gQ" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 SolidWorks Learning Portal. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.width === '250px') {
+                sidebar.style.width = '0';
+            } else {
+                sidebar.style.width = '250px';
+            }
+        }
+
+        // Close Sidebar when clicking outside
+        document.addEventListener('click', (event) => {
+            const sidebar = document.getElementById('sidebar');
+            const menuIcon = document.querySelector('.menu-icon');
+            if (!sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
+                sidebar.style.width = '0';
+            }
+        });
+
+        // Toggle Dropdown
+        function toggleDropdown(id, element) {
+            var section = document.getElementById(id);
+            if (section.style.display === "none" || section.style.display === "") {
+                section.style.display = "block";
+                section.style.opacity = "1";
+                element.innerHTML = "Show less ▲";
+                element.setAttribute("aria-expanded", "true");
+            } else {
+                section.style.display = "none";
+                section.style.opacity = "0";
+                element.innerHTML = "Show more ▼";
+                element.setAttribute("aria-expanded", "false");
+            }
+        }
+    </script>
+</body>
+</html>
